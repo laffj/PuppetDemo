@@ -4,12 +4,9 @@ pipeline {
         stage('build') {
             steps {
                 sh 'echo Hello From OKE'
-                emailext (
-                 to: 'jlaffey@sbcglobal.net',
-                 subject: 'Test from Jenkins',
-                 body: 'details, details',
-                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                )
+                mail to: 'jlaffey@sbcglobal.net',
+                    subject: "Successfull Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "${env.BUILD_URL} worked fine"
             }
         }
     }
