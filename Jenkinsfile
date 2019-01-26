@@ -1,5 +1,5 @@
 pipeline {
-    agent (centos)
+    agent { node{label 'centos'}}
     stages {
         stage('build') {
             steps {
