@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh 'echo Email From OKE'
           emailext (
-                to: 'jlaffey@sbcglobal.net',
+                to: 'jlaffey@cloudbees.com',
                 subject: 'Test from Jenkins',
                 body: 'details, details',
                 recipientProviders: [[$class: 'DevelopersRecipientProvider']]
