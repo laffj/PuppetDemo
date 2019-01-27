@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Testing Java7') {
           steps {
-            echo 'Testing build on Java 7'
+            echo 'Testing build on Java 72'
             sleep 20
             echo 'More testing on Java 7'
           }
