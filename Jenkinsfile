@@ -1,35 +1,55 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      steps {
-        echo 'This is the first step of the pipeline'
-        sleep 5
+    stage ('Building') {
+      parallel {
+        stage('Build Java 7') {
+          steps {
+            sh 'env > java7.txt'
+          }
+          post{
+            success{
+              stash(name: 'Java 7', includes: 'java7.txt')
+              }
+            }
+        }
+        stage('Build Java 8') {
+          steps {
+            sh 'env > java8.txt'
+          }
+          post{
+            success{
+            stash(name: 'Java 8', includes: 'java8.txt')
+          }
+        }
       }
+     }
     }
     stage('Testing') {
       parallel {
-        stage('Testing') {
-          steps {
-            echo 'Running tests'
-            sleep 25
+      stage('Testing Java7') {
+        agent {
+          node {
+            label 'java7'
           }
         }
-        stage('Testing Java7') {
-          steps {
-            echo 'Testing build on Java 7'
-            sleep 20
-            echo 'More testing on Java 7'
+        steps {
+          unstash 'Java 7'
+          sh 'cat java7.txt'
+        }
+        }
+      stage('Testing Java8') {
+        agent {
+          node {
+            label 'java8'
           }
         }
-        stage('Testing Java8') {
-          steps {
-            echo 'Testing build on Java 8'
-            sleep 20
-            echo 'Running more tests on Java 8'
-          }
+        steps {
+          unstash 'Java 8'
+          sh 'cat java8.txt'
         }
-        stage('Testing Notify Staging') {
+        }        
+      stage('Testing Notify Staging') {
         when {
           branch 'staging'
         }        
@@ -37,7 +57,7 @@ pipeline {
           emailext (
            to: 'jlaffey@cloudbees.com',
            subject: 'Build is in Staging',
-           body: '${currentBuild.fullDisplayName} - has completed staging',
+            body: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - has completed staging!!",
            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
           }
