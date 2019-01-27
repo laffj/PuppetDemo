@@ -21,7 +21,7 @@ pipeline {
           }
           post{
             success{
-            archiveArtifacts '/tmp/*.txt'
+            archiveArtifacts '/tmp/*.*'
             stash(name: 'Java 8', includes: 'tmp/**')
           }
         }
