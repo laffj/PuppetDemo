@@ -27,7 +27,7 @@ pipeline {
     }
     stage('Testing') {
       parallel {
-        stage('Testing Java7') {
+      stage('Testing Java7') {
         agent {
           node {
             label 'java7'
@@ -38,14 +38,18 @@ pipeline {
           sh 'cat java7.txt'
         }
         }
-        stage('Testing Java8') {
-          steps {
-            echo 'Testing build on Java 8'
-            sleep 20
-            echo 'Running more tests on Java 8'
+      stage('Testing Java8') {
+        agent {
+          node {
+            label 'java8'
           }
         }
-        stage('Testing Notify Staging') {
+        steps {
+          unstash 'Java 8'
+          sh 'cat java8.txt'
+        }
+        }        
+      stage('Testing Notify Staging') {
         when {
           branch 'staging'
         }        
