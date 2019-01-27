@@ -5,23 +5,23 @@ pipeline {
       parallel {
         stage('Build Java 7') {
           steps {
-            sh 'env > /tmp/java7.txt'
+            sh 'env > java7.txt'
           }
           post{
             success{
-              archiveArtifacts 'tmp/*.*'
-              stash(name: 'Java 7', includes: 'tmp/**')
+              archiveArtifacts 'java7.txt'
+              stash(name: 'Java 7', includes: '**')
               }
             }
         }
         stage('Build Java 8') {
           steps {
-            sh 'env > /tmp/java8.txt'
+            sh 'env > java8.txt'
           }
           post{
             success{
-            archiveArtifacts 'tmp/*.*'
-            stash(name: 'Java 8', includes: 'tmp/**')
+            archiveArtifacts 'java8.*'
+            stash(name: 'Java 8', includes: '**')
           }
         }
       }
