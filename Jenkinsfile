@@ -29,6 +29,19 @@ pipeline {
             echo 'Running more tests on Java 8'
           }
         }
+        stage('Testing Notify Staging') {
+        when {
+          branch 'staging'
+        }        
+         steps {
+          emailext (
+           to: 'jlaffey@cloudbees.com',
+           subject: 'Build is in Staging',
+           body: '${currentBuild.fullDisplayName} - has completed staging',
+           recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+          }
+        }        
       }
     }
     stage('Deploy') {
@@ -38,6 +51,12 @@ pipeline {
       steps {
         checkpoint 'Ready to Deploy'
         input(message: 'Is the build okay to deploy?', ok: 'Yes')
+        emailext (
+         to: 'jlaffey@sbcglobal.net',
+         subject: 'Test from Jenkins',
+         body: 'details, details',
+         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+              )
       }
     }
   }
