@@ -39,6 +39,7 @@ pipeline {
            subject: 'Build is in Staging',
            body: '${currentBuild.fullDisplayName} - has completed staging',
            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
           }
         }        
       }
