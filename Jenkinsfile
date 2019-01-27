@@ -33,7 +33,7 @@ pipeline {
         when {
           branch 'staging'
         }        
-          steps {
+         steps {
           emailext (
            to: 'jlaffey@cloudbees.com',
            subject: 'Build is in Staging',
