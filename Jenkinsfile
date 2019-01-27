@@ -38,6 +38,12 @@ pipeline {
       steps {
         checkpoint 'Ready to Deploy'
         input(message: 'Is the build okay to deploy?', ok: 'Yes')
+        emailext (
+         to: 'jlaffey@sbcglobal.net',
+         subject: 'Test from Jenkins',
+         body: 'details, details',
+         recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+              )
       }
     }
   }
