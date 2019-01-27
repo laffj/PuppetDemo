@@ -1,11 +1,30 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
-      steps {
-        echo 'This is the first step of the pipeline'
-        sleep 5
+      parallel {
+        stage('Build Java 7') {
+          steps {
+            sh 'env > /tmp/java7.txt'
+          }
+          post{
+            success{
+              archiveArtifacts '/tmp/*.txt'
+              stash(name: 'Java 7', includes: '/tmp/**')
+              }
+            }
+        }
+        stage('Build Java 8') {
+          steps {
+            sh 'env > /tmp/java8.txt'
+          }
+          post{
+            success{
+            archiveArtifacts '/tmp/*.txt'
+            stash(name: 'Java 8', includes: 'tmp/**')
+          }
+        }
       }
+     }
     }
     stage('Testing') {
       parallel {
