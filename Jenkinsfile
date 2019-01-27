@@ -6,6 +6,7 @@ pipeline {
         stage('Build Java 7') {
           steps {
             sh 'env > /tmp/java7.txt'
+            sh 'ls /tmp'
           }
           post{
             success{
