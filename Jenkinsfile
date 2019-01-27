@@ -19,8 +19,7 @@ pipeline {
           }
           post{
             success{
-            archiveArtifacts artifacts: 'java8.txt'
-            stash(name: 'Java 8', includes: '**')
+            stash(name: 'Java 8', includes: 'java8.txt')
           }
         }
       }
