@@ -6,12 +6,11 @@ pipeline {
         stage('Build Java 7') {
           steps {
             sh 'env > /tmp/java7.txt'
-            sh 'ls /tmp'
           }
           post{
             success{
-              archiveArtifacts '/tmp/*.*'
-              stash(name: 'Java 7', includes: '/tmp/**')
+              archiveArtifacts 'tmp/*.*'
+              stash(name: 'Java 7', includes: 'tmp/**')
               }
             }
         }
@@ -21,7 +20,7 @@ pipeline {
           }
           post{
             success{
-            archiveArtifacts '/tmp/*.*'
+            archiveArtifacts 'tmp/*.*'
             stash(name: 'Java 8', includes: 'tmp/**')
           }
         }
