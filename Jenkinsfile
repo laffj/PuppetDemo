@@ -12,7 +12,7 @@ pipeline {
         stage('Testing') {
           steps {
             echo 'Running tests'
-            sleep 20
+            sleep 25
           }
         }
         stage('Testing Java7') {
