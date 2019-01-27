@@ -29,6 +29,18 @@ pipeline {
             echo 'Running more tests on Java 8'
           }
         }
+        stage('Testing Notify Staging') {
+        when {
+          branch 'staging'
+        }        
+          steps {
+          emailext (
+           to: 'jlaffey@sbcglobal.net',
+           subject: 'Build is in Staging',
+           body: '${currentBuild.fullDisplayName} - has completed staging',
+           recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+          }
+        }        
       }
     }
     stage('Deploy') {
