@@ -1,6 +1,7 @@
 pipeline {
   agent any
   stages {
+    stage ('Building') {
       parallel {
         stage('Build Java 7') {
           steps {
@@ -79,3 +80,4 @@ pipeline {
       }
     }
   }
+}
