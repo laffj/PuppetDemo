@@ -37,7 +37,7 @@ pipeline {
           emailext (
            to: 'jlaffey@cloudbees.com',
            subject: 'Build is in Staging',
-            body: {$env.BUILD_DISPLAY_NAME}' - has completed staging!!',
+            body: "Job '{$env.BUILD_DISPLAY_NAME}' - has completed staging!!",
            recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
           }
