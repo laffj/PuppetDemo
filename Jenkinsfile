@@ -48,9 +48,7 @@ pipeline {
           unstash 'Java 8'
           sh 'cat java8.txt'
         }
-        }
-      stage('Testing Notify Staging') {
-    }
+      }
     stage ('Staging Notification'){
     when {
       branch 'staging'
