@@ -48,22 +48,23 @@ pipeline {
           unstash 'Java 8'
           sh 'cat java8.txt'
         }
-        }        
+        }
       stage('Testing Notify Staging') {
-        when {
-          branch 'staging'
-        }        
-         steps {
-          emailext (
-           to: 'jlaffey@cloudbees.com',
-           subject: 'Build is in Staging',
-            body: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - has completed staging!!",
-           recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
-          }
-        }        
+    }
+    stage ('Staging Notification'){
+    when {
+      branch 'staging'
+    }
+     steps {
+      emailext (
+       to: 'jlaffey@cloudbees.com',
+       subject: 'Build is in Staging',
+        body: "Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - has completed staging!!",
+       recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+        )
       }
     }
+  }
     stage('Deploy') {
       when {
         branch 'master'
