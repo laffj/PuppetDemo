@@ -49,6 +49,8 @@ pipeline {
           sh 'cat java8.txt'
         }
       }
+    }
+  }    
     stage ('Staging Notification'){
     when {
       branch 'staging'
@@ -79,5 +81,3 @@ pipeline {
       }
     }
   }
- }
-}
