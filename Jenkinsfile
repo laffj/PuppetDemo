@@ -41,6 +41,7 @@ pipeline {
           steps {
             unstash 'Java 7'
             sh 'cat java7.txt'
+            sleep 20
           }
         }
         stage('Testing Java8') {
